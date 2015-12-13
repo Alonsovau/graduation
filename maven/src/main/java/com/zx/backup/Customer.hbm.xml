@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="com.zx.model.Customer" table="customer">
+  <!-- 注册用户ID -->
+  <id column="注册用户ID" name="id" type="integer">
+   <generator class="native"/>
+  </id>
+  <!-- 注册用户名称 -->
+  <property column="注册名称" generated="never" lazy="false" length="30"
+   name="username" type="string"/>
+  <!-- 密码 -->
+  <property column="密码" generated="never" lazy="false" length="20"
+   name="password" type="string"/>
+  <!-- 真实姓名 -->
+  <property column="真实姓名" generated="never" lazy="false" length="30"
+   name="realname" type="string"/>
+  <!--地址 -->
+  <property column="地址" generated="never" lazy="false" length="100"
+   name="address" type="string"/>
+  <!-- Email -->
+  <property column="Email" generated="never" lazy="false" length="50"
+   name="email" type="string"/>
+  <!--联系电话 -->
+  <property column="联系电话" generated="never" lazy="false" length="11"
+   name="phone" type="string"/>
+ </class>
+</hibernate-mapping>

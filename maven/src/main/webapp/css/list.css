@@ -1,0 +1,38 @@
+.pro-list li{position:relative;border-bottom:1px solid #CCC;margin:0 0 5px;padding-bottom:5px;}
+.pro-list li:last-child{border:none;}
+.pro-list li:after{
+	content: '';
+	position: absolute;
+	right: 10px;
+	top: 45%;
+	width: 11px;
+	height: 15px;
+	background-size: 11px 15px;
+	background-image: url(../images/arrow1.png);
+	background-repeat: no-repeat;
+}
+.pro-list li .box{display:-webkit-box;}
+.pro-list li img{width:100px;height:100px;margin-right:10px;}
+.pro-list li .pro-info{-webkit-box-flex:1;width:200px;}
+.pro-list li .pro-info .pro-name{font-size:14px;height:31px;line-height:1.2;overflow:hidden;}
+.pro-list li .pro-info .huodong{margin:10px 0 11px;color:#666;height:30px;overflow:hidden;line-height:1.1;width:90%;}
+.pro-list li .pro-info .snPrice{font-size:15px;display:inline-block;width:90px;}
+.view-more{position:relative;height:18px;text-overflow:ellipsis;overflow:hidden;border-bottom:1px solid #ccc;padding:10px;}
+.view-more .arrow{
+	position: absolute;
+	height: 14px;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-size: 10px;
+	-webkit-transform: scaleY(-1);
+	background-color: #F2EDE0;
+	background-image: url(../images/arrow2.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.view-more .arrow.down{-webkit-transform:scaleY(1);}
+.view-more.down{height:auto;}
+.load-more-lay a{display:block;height:35px;line-height:35px;text-align:center;color:#313131;padding:20px;}
+
+
