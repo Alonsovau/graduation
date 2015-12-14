@@ -47,6 +47,16 @@
 	overflow: hidden;
 }
 </style>
+<script type="text/javascript">
+function submit(operate){
+	if(operate=='update')
+		addForm.action="salerAction!update.action";
+	if(operate=='add')
+		addForm.action="salerAction!add.action";
+	addForm.submit();
+	return true;
+}
+</script>
 </head>
 <body>
 <nav class="nav nav-sub pr">
@@ -55,19 +65,34 @@
   </div>
 </nav>
 
-<div class="login layout f14"  style="width: 62%;text-align: center;margin: auto;">
-	<div class="btn-ui-b mt10">
-		<s:a action="categoryAction!index" namespace="/category">类别管理</s:a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<s:a action="salerAction!index" namespace="/saler">商家管理</s:a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<a href="javascript:void(0);" onclick="">未定</a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<a href="javascript:void(0);" onclick="">未定</a>
-	</div>	
+<div class="login layout f14"  style="margin: auto;width: 62%">
+	<s:form action="salerAction!add.action" name="/user" method="post" id="addForm" theme="simple">
+      <ul class="input-list mt10">
+      	<li>
+      	  <input type="hidden" value="<s:property value="saler.salerId"/>" name="salerId">
+      	  <s:fielderror></s:fielderror>
+      	</li>
+        <li>
+          <s:textfield name="name" cssClass="input-ui-a" placeholder="请输入商户名" value="%{saler.name}"></s:textfield>
+		</li>
+		<li>
+		  <s:textfield name="adress" cssClass="input-ui-a" placeholder="请输入商户地址" value="%{saler.adress}"></s:textfield>
+		</li>
+        <li>
+          <s:textfield name="account" cssClass="input-ui-a" placeholder="请输入商户帐号" value="%{saler.account}"></s:textfield>
+        </li>
+      </ul>
+    </s:form>
+    <s:if test="salerId==null">
+    <div class="btn-ui-b mt10">
+    	<a href="javascript:void(0);" onclick="return submit('add');">添加</a>
+    </div>
+    </s:if>
+    <s:if test="salerId!=null">
+    <div class="btn-ui-b mt10">
+    	<a href="javascript:void(0);" onclick="return submit('update');">修改</a>
+    </div>
+    </s:if>   
 </div>
 
 <div id="footer">

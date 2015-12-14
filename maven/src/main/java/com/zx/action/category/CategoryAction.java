@@ -1,6 +1,7 @@
 package com.zx.action.category;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import com.zx.action.BaseAction;
 import com.zx.model.Category;
 import com.zx.model.Pagination;
 import com.zx.service.CategoryServiceI;
-
+@Namespace("/category")
 @Action("categoryAction")
 @Results({
 	@Result(name="success",location="/category/category_success.jsp"),
