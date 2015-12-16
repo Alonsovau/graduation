@@ -63,7 +63,7 @@
 		<s:a action="salerAction!index" namespace="/saler">商家管理</s:a>
 	</div>
 	<div class="btn-ui-b mt10">
-		<a href="javascript:void(0);" onclick="">未定</a>
+		<s:a action="productAction!index" namespace="/product">商品管理</s:a>
 	</div>
 	<div class="btn-ui-b mt10">
 		<a href="javascript:void(0);" onclick="">未定</a>

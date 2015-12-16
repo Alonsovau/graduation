@@ -52,7 +52,7 @@ function submit(operate){
 	if(operate=='select')
 		addForm.action="salerAction!select.action";
 	if(operate=='add')
-		addForm.action="salerAction!edit.action";
+		addForm.action="productAction!edit.action";
 	addForm.submit();
 	return true;
 }
@@ -68,14 +68,22 @@ function submit(operate){
 <div class="login layout f14"  style="margin: auto;width: 62%">
     <s:form action="categoryAction!add.action" method="post" id="addForm" theme="simple">
       <ul class="input-list mt10">
+      	<li>
+      	  <s:fielderror></s:fielderror>
+      	</li>
         <li>
-          <s:textfield name="name" cssClass="input-ui-b" placeholder="请输入商户名称" ></s:textfield>
-          <s:fielderror></s:fielderror>
+          <s:textfield name="cateName" cssClass="input-ui-b" placeholder="请输入类别名称" ></s:textfield>
+        </li>
+        <li>
+          <s:textfield name="salerName" cssClass="input-ui-b" placeholder="请输入商户名称" ></s:textfield>
+        </li>
+        <li>
+          <s:textfield name="name" cssClass="input-ui-b" placeholder="请输入商品名称" ></s:textfield>
         </li>
       </ul>
     </s:form>
     <div class="btn-ui-b mt10">
-        <a href="javascript:void(0);" onclick="return submit('add');">添加商户</a>
+        <a href="javascript:void(0);" onclick="return submit('add');">添加产品</a>
 	</div>
 	<div class="btn-ui-b mt10">
 		<a href="javascript:void(0);" onclick="return submit('select');">查找</a>

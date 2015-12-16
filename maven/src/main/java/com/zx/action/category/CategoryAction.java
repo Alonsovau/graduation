@@ -14,7 +14,7 @@ import com.zx.service.CategoryServiceI;
 @Namespace("/category")
 @Action("categoryAction")
 @Results({
-	@Result(name="success",location="/category/category_success.jsp"),
+	@Result(name="success",location="/common/admin_success.jsp"),
 	@Result(name="index",location="/category/category_operate.jsp"),
 	@Result(name="edit",location="/category/category_update.jsp")
 })

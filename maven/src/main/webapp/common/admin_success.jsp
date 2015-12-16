@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=2.0"/>
 <%--适应屏幕大小--%>
-<title>添加类别</title>
+<title>结果</title>
 <link rel="stylesheet" type="text/css" href="${context_path}/css/module.css">
 <link rel="stylesheet" type="text/css" href="${context_path}/css/member.css">
 <style type="text/css">
@@ -58,7 +58,7 @@ function addSubmit(){
 <s:property value="exception.message"/>
 <nav class="nav nav-sub pr">
   <div class="nav-title wb">
-	<span>添加类别</span>
+	<span></span>
   </div>
 </nav>
 <div class="login layout f14">

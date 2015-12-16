@@ -16,9 +16,14 @@ import com.zx.service.SalerServiceI;
 @Action("salerAction")
 @Results({
 	@Result(name="index",location="/saler/saler_operate.jsp"),
-	@Result(name="edit",location="/saler/saler_add.jsp")
+	@Result(name="edit",location="/saler/saler_add.jsp"),
+	@Result(name="success",location="/common/admin_success.jsp")
 })
 public class SalerAction extends BaseAction implements ModelDriven<Saler>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Saler saler=new Saler();
 	private SalerServiceI salerService;
 	private Pagination<Saler> pagination;
@@ -63,6 +68,7 @@ public class SalerAction extends BaseAction implements ModelDriven<Saler>{
 		}
 		if(saler.getAccount().length()==0||saler.getAdress()==null){
 			addFieldError("", "商户帐号不能为空");
+			return EDIT;
 		}
 		if(salerService.save(saler)){
 			return SUCCESS;
