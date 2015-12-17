@@ -56,6 +56,24 @@ function submit(operate){
 	addForm.submit();
 	return true;
 }
+function createFileButton(){
+    var div=document.getElementById("uploadDiv");
+    var fileButton=document.createElement("input");
+    fileButton.type="file";
+    fileButton.name="files";
+    var removeButton=document.createElement("input");
+    var br=document.createElement("br");
+    removeButton.type="button";
+    removeButton.value="删除";
+    removeButton.onclick=function(){
+        div.removeChild(fileButton);
+        div.removeChild(removeButton);
+        div.removeChild(br);
+    }
+    div.appendChild(fileButton);
+    div.appendChild(removeButton);
+    div.appendChild(br);
+}
 </script>
 </head>
 <body>
@@ -66,7 +84,7 @@ function submit(operate){
 </nav>
 
 <div class="login layout f14"  style="margin: auto;width: 62%">
-	<s:form action="salerAction!add.action" name="/user" method="post" id="addForm" theme="simple">
+	<s:form action="salerAction!add.action" name="/user" method="post" id="addForm" theme="simple" enctype="multipart/form-data">
       <ul class="input-list mt10">
       	<li>
       	  <input type="hidden" value="<s:property value="product.productId"/>" name="productId">
@@ -105,8 +123,11 @@ function submit(operate){
         </li>
         <li>
           <%--<s:textfield name="stockNumber" cssClass="input-ui-a" placeholder="请输入产品库存" value="%{saler.account}"></s:textfield>
-        --%></li>                        
+        --%></li>
       </ul>
+      <div id="uploadDiv">
+        <input type="file" name="files"/><input type="button" onclick="createFileButton()" value="新增"/><br>
+	  </div>      
     </s:form>
     <s:if test="salerId==null">
     <div class="btn-ui-b mt10">

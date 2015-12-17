@@ -1,7 +1,15 @@
 package com.zx.action.product;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
+import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -10,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ModelDriven;
 import com.zx.action.BaseAction;
 import com.zx.model.Category;
+import com.zx.model.Picture;
 import com.zx.model.Product;
 import com.zx.model.Saler;
 import com.zx.service.CategoryServiceI;
@@ -31,8 +40,10 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 	private ProductServiceI productService;
 	private List<Category> categoryList;
 	private List<Saler> salerList;
+	private List<File> files;
 	private Integer categoryId;
 	private Integer salerId;
+	private String salerName;
 	
 	@Autowired
 	public void setProductService(ProductServiceI productService) {
@@ -64,6 +75,10 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		this.salerList = salerList;
 	}
 
+	public void setFiles(List<File> files) {
+		this.files = files;
+	}
+
 	public Integer getCategoryId() {
 		return categoryId;
 	}
@@ -78,6 +93,10 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 
 	public void setSalerId(Integer salerId) {
 		this.salerId = salerId;
+	}
+
+	public void setSalerName(String salerName) {
+		this.salerName = salerName;
 	}
 
 	public Product getProduct() {
@@ -99,7 +118,7 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		return EDIT;
 	}
 	
-	public String add(){
+	public String add() throws Exception{
 		if(product.getName().length()==0||product.getName()==null){
 			addFieldError("", "产品名不能为空");
 			return edit();
@@ -111,6 +130,22 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		if(product.getStockNumber()==null){
 			addFieldError("", "库存不能为空");
 			return edit();
+		}
+		Properties properties=new Properties();
+		properties.load(getClass().getResourceAsStream("/config.properties"));
+		String path=properties.get("uploadDirectory").toString();
+		Set<Picture> pictures=new HashSet<Picture>(0);
+		if (files.size() > 0) {
+			for (File file : files) {
+				String fullPath = path + "/" + salerId.toString() + "/"
+						+ UUID.randomUUID().toString() + ".jpg";
+				FileUtils.copyFile(file, new File(fullPath));
+				Picture picture = new Picture();
+				picture.setProduct(product);
+				picture.setPath(fullPath);
+				pictures.add(picture);
+			}
+			product.setPictures(pictures);
 		}
 		product.setCategory(categoryService.findByID(categoryId));
 		product.setSaler(salerService.findByID(salerId));

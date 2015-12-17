@@ -72,14 +72,21 @@ function submit(operate){
       	  <s:fielderror></s:fielderror>
       	</li>
         <li>
-          <s:textfield name="cateName" cssClass="input-ui-b" placeholder="请输入类别名称" ></s:textfield>
-        </li>
-        <li>
           <s:textfield name="salerName" cssClass="input-ui-b" placeholder="请输入商户名称" ></s:textfield>
         </li>
         <li>
           <s:textfield name="name" cssClass="input-ui-b" placeholder="请输入商品名称" ></s:textfield>
         </li>
+        <li>
+          <span>选择类别：</span>
+          <select name="categoryId">
+          	<s:iterator var="category" value="categoryList">
+          		<s:iterator value="category">
+          			<option value="<s:property value="cateId"/>"><s:property value="name"/></option>
+          		</s:iterator>
+          	</s:iterator>
+          </select>
+        </li>        
       </ul>
     </s:form>
     <div class="btn-ui-b mt10">

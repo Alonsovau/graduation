@@ -39,7 +39,7 @@
                 <column name="order_id" not-null="true" />
             </many-to-many>
         </set>
-        <set name="pictures" inverse="true">
+        <set name="pictures" inverse="true" cascade="save-update">
             <key>
                 <column name="product_id" />
             </key>
