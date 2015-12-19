@@ -98,16 +98,20 @@ function createFileButton(){
 		</li>
         <li>
           <s:textfield name="stockNumber" cssClass="input-ui-a" placeholder="请输入产品库存" value="%{product.stockNumber}"></s:textfield>
-          
         </li>
         <li>
           <s:textfield name="description" cssClass="input-ui-a" placeholder="请输入产品描述" value="%{product.description}"></s:textfield>
-        </li>
+        </li>        
         <li>
           <select name="categoryId">
           	<s:iterator var="category" value="categoryList">
           		<s:iterator value="category">
-          			<option value="<s:property value="cateId"/>"><s:property value="name"/></option>
+          			<s:if test="product.category.cateId==cateId">
+		          		<option value="<s:property value="cateId"/>" selected="selected"><s:property value="name"/></option>
+          			</s:if>
+          			<s:if test="product.category.cateId!=cateId">
+		          		<option value="<s:property value="cateId"/>"><s:property value="name"/></option>
+          			</s:if>          			
           		</s:iterator>
           	</s:iterator>
           </select>
@@ -116,7 +120,12 @@ function createFileButton(){
           <select name="salerId">
           	<s:iterator var="saler" value="salerList">
           		<s:iterator>
-          			<option value="<s:property value="salerId"/>"><s:property value="name"/></option>
+          			<s:if test="product.saler.salerId==salerId">
+          				<option value="<s:property value="salerId"/>" selected="selected"><s:property value="name"/></option>	
+          			</s:if>
+          			<s:if test="product.saler.salerId!=salerId">
+          				<option value="<s:property value="salerId"/>"><s:property value="name"/></option>	
+          			</s:if>          			
           		</s:iterator>
           	</s:iterator>
           </select>
@@ -129,18 +138,18 @@ function createFileButton(){
         <input type="file" name="files"/><input type="button" onclick="createFileButton()" value="新增"/><br>
 	  </div>      
     </s:form>
-    <s:if test="salerId==null">
+    <s:if test="productId==null">
     <div class="btn-ui-b mt10">
     	<a href="javascript:void(0);" onclick="return submit('add');">添加</a>
     </div>
     </s:if>
-    <s:if test="salerId!=null">
+    <s:if test="productId!=null">
     <div class="btn-ui-b mt10">
     	<a href="javascript:void(0);" onclick="return submit('update');">修改</a>
     </div>
     </s:if>   
 </div>
-
+<s:property value="product.category.cateId"/>
 <div id="footer">
   <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
 </div>

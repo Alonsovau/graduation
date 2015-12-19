@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ModelDriven;
 import com.zx.action.BaseAction;
 import com.zx.model.Category;
+import com.zx.model.Pagination;
 import com.zx.model.Picture;
 import com.zx.model.Product;
 import com.zx.model.Saler;
@@ -44,6 +45,7 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 	private Integer categoryId;
 	private Integer salerId;
 	private String salerName;
+	private Pagination<Product> pagination;
 	
 	@Autowired
 	public void setProductService(ProductServiceI productService) {
@@ -95,6 +97,10 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		this.salerId = salerId;
 	}
 
+	public String getSalerName() {
+		return salerName;
+	}
+
 	public void setSalerName(String salerName) {
 		this.salerName = salerName;
 	}
@@ -107,6 +113,14 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		this.product = product;
 	}
 
+	public Pagination<Product> getPagination() {
+		return pagination;
+	}
+
+	public void setPagination(Pagination<Product> pagination) {
+		this.pagination = pagination;
+	}
+
 	@Override
 	public Product getModel() {
 		return product;
@@ -115,6 +129,8 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 	public String edit(){
 		categoryList=categoryService.findByName(null, -1, -1).getList();
 		salerList=salerService.findByName(null, -1, -1).getList();
+		if(product.getProductId()!=null)
+			product=productService.findByID(product.getProductId());
 		return EDIT;
 	}
 	
@@ -152,5 +168,16 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		if(productService.save(product))
 			return SUCCESS;
 		return edit();
+	}
+	
+	public String index(){
+		categoryList=categoryService.findByName(null, -1, -1).getList();
+		return INDEX;
+	}
+	
+	public String select(){
+		categoryList=categoryService.findByName(null, -1, -1).getList();
+		pagination=productService.find(categoryId, salerName, product.getName(), pageNo, pageSize);
+		return INDEX;
 	}
 }

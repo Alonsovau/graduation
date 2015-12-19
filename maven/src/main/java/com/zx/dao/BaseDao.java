@@ -1,6 +1,7 @@
 package com.zx.dao;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import com.zx.model.Pagination;
@@ -19,8 +20,11 @@ public interface BaseDao<T> {
 //	public T load(Serializable entityId); // 加载实体对象
 
 	public Object uniqueResult(String hql, Object[] queryParams); // 使用hql语句操作
-	// 分页操作方法
+	
+	public Object uniqueResultSQL(String sql, Object[] queryParams); // 使用sql语句操作
 
+	public List<Object> listResult(String sql,Object[] queryParams,final int pageNo,
+			final int maxResult);//使用sql语句获得list结果
 //	public long getCount();// 获取记录总数
 
 //	public Pagination<T> find(int pageNo, int maxResult);// 普通分页操作

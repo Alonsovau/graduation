@@ -50,7 +50,7 @@
 <script type="text/javascript">
 function submit(operate){
 	if(operate=='select')
-		addForm.action="salerAction!select.action";
+		addForm.action="productAction!select.action";
 	if(operate=='add')
 		addForm.action="productAction!edit.action";
 	addForm.submit();
@@ -99,24 +99,24 @@ function submit(operate){
 		<div style="text-align:center;">
 			<table class="table">
 					<tr>
-						<th class="td">ID</th>
-						<th class="td">商户名称</th>
+						<th class="td">产品ID</th>
+						<th class="td">产品名称</th>
 						<th class="td"></th>
 						<th class="td"></th>
 					</tr>
 				<s:iterator value="pagination.list">
 					<tr>
-						<td class="td"><s:property value="salerId"/></td>
+						<td class="td"><s:property value="productId"/></td>
 						<td class="td"><s:property value="name"/></td>
 						<td class="td">
-							<s:a action="salerAction!delete.action">
-								<s:param name="salerId" value="salerId"></s:param>
+							<s:a action="productAction!delete.action">
+								<s:param name="productId" value="productId"></s:param>
 								<div class="mybtn">删除</div>	
 							</s:a>
 						</td>
 						<td class="td">
-							<s:a action="salerAction!edit.action">
-								<s:param name="salerId" value="salerId"></s:param>
+							<s:a action="productAction!edit.action">
+								<s:param name="productId" value="productId"></s:param>
 								<div class="mybtn">修改</div>	
 							</s:a>
 						</td>						
@@ -128,19 +128,27 @@ function submit(operate){
 		    <div class="load-more-lay" style="display: block;" id="loadingMore">
 		    <s:url var="first">
 		      <s:param name="pageNo" value="1"></s:param>
+		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
+		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>
 		    <s:url var="previous">
 		      <s:param name="pageNo" value="pagination.pageNo-1"></s:param>
+		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
+		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>
 		    <s:url var="last">
 		      <s:param name="pageNo" value="pagination.bottomPageNo"></s:param>
+		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
+		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>
 		    <s:url var="next">
 		      <s:param name="pageNo" value="pagination.pageNo+1"></s:param>
+		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
+		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>	
 		    </div>
 		    <div class="w page">

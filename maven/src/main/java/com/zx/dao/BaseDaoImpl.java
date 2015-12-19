@@ -80,6 +80,13 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 		setQueryParams(query, queryParams);//设置查询参数
 		return query.uniqueResult();
 	}
+	
+	@Override
+	public Object uniqueResultSQL(String sql, Object[] queryParams){
+		Query query=getSession().createSQLQuery(sql);
+		setQueryParams(query, queryParams);//设置查询参数
+		return query.uniqueResult();
+	}
 	/**
 	 * 对query中的参数赋值
 	 * @param query
@@ -87,8 +94,12 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 	 */
 	protected void setQueryParams(Query query, Object[] queryParams){
 		if(queryParams!=null && queryParams.length>0){
+			int j=0;
 			for(int i=0; i<queryParams.length; i++){
-				query.setParameter(i, queryParams[i]);
+				if(queryParams[i]!=null){
+					query.setParameter(j, queryParams[i]);
+					j++;
+				}
 			}
 		}
 	}
@@ -131,7 +142,7 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 		final Pagination<T> Pagination = new Pagination<T>();   //实例化分页对象
 		Pagination.setPageNo(pageNo);                         //设置当前页数
 		Pagination.setPageSize(maxResult);                     //设置每页显示记录数
-		String hql = new StringBuffer().append("from ")       //添加form字段
+		String hql = new StringBuffer().append("from ")       //添加from字段
 		.append(GenericsUtils.getGenericName(entityClass))    //添加对象类型
 		.append(" ")                                          //添加空格
 		.append(where == null ? "" : where)  //如果where为null就添加空格,反之添加where
@@ -186,5 +197,15 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 			sb.deleteCharAt(sb.length() - 1);
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public List<Object> listResult(String sql, Object[] queryParams,final int pageNo,
+			final int maxResult) {
+		Query query=getSession().createSQLQuery(sql);
+		setQueryParams(query, queryParams);//设置查询参数
+		return query.setFirstResult(getFirstResult(pageNo, maxResult))//设置分页起始位置
+				.setMaxResults(maxResult)//设置每页显示的记录数
+				.list();
 	}
 }

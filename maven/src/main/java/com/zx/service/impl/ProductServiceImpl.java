@@ -1,5 +1,9 @@
 package com.zx.service.impl;
 
+import java.math.BigInteger;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +39,50 @@ public class ProductServiceImpl implements ProductServiceI{
 	@Override
 	public Pagination<Product> find(Integer categoryId, String salerName,
 			String productName, int pageNo, int maxResult) {
-		String where=" ";
-		
-		return null;
+		Object[] queryParams=new Object[3];
+		queryParams[0]=categoryId;
+		StringBuffer where=new StringBuffer().append(" from product p,saler s where cate_id=? ");
+		if(productName!=null&&productName.length()>0){
+			where.append(" and p.name like ? ");
+			queryParams[1]="%"+productName+"%";
+		}
+		if(salerName!=null&&salerName.length()>0){
+			where.append(" and s.name like ? ");
+			queryParams[2]="%"+salerName+"%";
+		}
+		where.append(" and p.saler_id=s.saler_id ");
+		List<Object> list=productDao.listResult("select product_id,p.name "+where.toString(), queryParams, pageNo, maxResult);
+		List<Product> products = new LinkedList<Product>();
+		Pagination<Product> pagination=new Pagination<Product>();
+		for(int i=0;i<list.size();i++){
+			Product p=new Product();
+			Object[] o=(Object[]) list.get(i);
+			p.setProductId((Integer) o[0]);
+			p.setName(o[1].toString());
+			products.add(p);
+		}
+		int totalRecords= ((BigInteger)productDao.uniqueResultSQL("select count(*) "+where.toString(), queryParams)).intValue();
+		pagination.setList(products);
+		pagination.setPageNo(pageNo);
+		pagination.setPageSize(maxResult);
+		pagination.setTotalRecords(totalRecords);
+		return pagination;
+	}
+
+	@Override
+	public Product findByID(int id) {
+		return productDao.get(id, Product.class);
+	}
+
+	@Override
+	public boolean delete(Product product) {
+		productDao.delete(Product.class, product.getProductId());
+		return true;
+	}
+
+	@Override
+	public boolean update(Product product) {
+		return false;
 	}
 
 }
