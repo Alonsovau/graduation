@@ -82,7 +82,8 @@ public class ProductServiceImpl implements ProductServiceI{
 
 	@Override
 	public boolean update(Product product) {
-		return false;
+		productDao.update(product);
+		return true;
 	}
 
 }

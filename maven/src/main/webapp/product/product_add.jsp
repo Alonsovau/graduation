@@ -50,7 +50,7 @@
 <script type="text/javascript">
 function submit(operate){
 	if(operate=='update')
-		addForm.action="salerAction!update.action";
+		addForm.action="productAction!update.action";
 	if(operate=='add')
 		addForm.action="productAction!add.action";
 	addForm.submit();
@@ -90,49 +90,74 @@ function createFileButton(){
       	  <input type="hidden" value="<s:property value="product.productId"/>" name="productId">
       	  <s:fielderror></s:fielderror>
       	</li>
+      	<li>
+      	  <span>产品名称：</span>
+      	</li>      	
         <li>
           <s:textfield name="name" cssClass="input-ui-a" placeholder="请输入产品名" value="%{product.name}"></s:textfield>
 		</li>
 		<li>
+      	  <span>产品价格：</span>
+      	</li>
+		<li>
 		  <s:textfield name="price" cssClass="input-ui-a" placeholder="请输入产品价格" value="%{product.price}"></s:textfield>
 		</li>
+		<li>
+      	  <span>产品库存：</span>
+      	</li>
         <li>
           <s:textfield name="stockNumber" cssClass="input-ui-a" placeholder="请输入产品库存" value="%{product.stockNumber}"></s:textfield>
         </li>
         <li>
+      	  <span>产品描述：</span>
+      	</li>
+        <li>
           <s:textfield name="description" cssClass="input-ui-a" placeholder="请输入产品描述" value="%{product.description}"></s:textfield>
         </li>        
         <li>
+          <span>选择类别：</span>
           <select name="categoryId">
           	<s:iterator var="category" value="categoryList">
           		<s:iterator value="category">
           			<s:if test="product.category.cateId==cateId">
 		          		<option value="<s:property value="cateId"/>" selected="selected"><s:property value="name"/></option>
           			</s:if>
-          			<s:if test="product.category.cateId!=cateId">
+          			<s:else>
 		          		<option value="<s:property value="cateId"/>"><s:property value="name"/></option>
-          			</s:if>          			
+          			</s:else>          			
           		</s:iterator>
           	</s:iterator>
           </select>
         </li>
         <li>
+          <span>选择商家：</span>
           <select name="salerId">
           	<s:iterator var="saler" value="salerList">
           		<s:iterator>
           			<s:if test="product.saler.salerId==salerId">
           				<option value="<s:property value="salerId"/>" selected="selected"><s:property value="name"/></option>	
           			</s:if>
-          			<s:if test="product.saler.salerId!=salerId">
+          			<s:else>
           				<option value="<s:property value="salerId"/>"><s:property value="name"/></option>	
-          			</s:if>          			
+          			</s:else>          			
           		</s:iterator>
           	</s:iterator>
           </select>
         </li>
         <li>
-          <%--<s:textfield name="stockNumber" cssClass="input-ui-a" placeholder="请输入产品库存" value="%{saler.account}"></s:textfield>
-        --%></li>
+        <li>
+          <span>已选择图片：</span>
+        </li>
+        <li>
+          <s:iterator var="picture" value="product.pictures">
+          	<img src="<s:property value="path"/>" width="70px;" height="70px;"/>
+          	<s:a action="productAction!deletePic.action">
+          		<s:param name="picId" value="PId"></s:param>
+          		<s:param name="productId" value="product.productId"></s:param>
+          		删除
+          	</s:a>
+          </s:iterator>
+        </li>
       </ul>
       <div id="uploadDiv">
         <input type="file" name="files"/><input type="button" onclick="createFileButton()" value="新增"/><br>
@@ -149,7 +174,7 @@ function createFileButton(){
     </div>
     </s:if>   
 </div>
-<s:property value="product.category.cateId"/>
+ss<s:property value="product.pictures.PId"/>
 <div id="footer">
   <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
 </div>

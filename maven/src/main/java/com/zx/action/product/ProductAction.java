@@ -3,13 +3,13 @@ package com.zx.action.product;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -23,6 +23,7 @@ import com.zx.model.Picture;
 import com.zx.model.Product;
 import com.zx.model.Saler;
 import com.zx.service.CategoryServiceI;
+import com.zx.service.PictureServiceI;
 import com.zx.service.ProductServiceI;
 import com.zx.service.SalerServiceI;
 
@@ -39,11 +40,13 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 	private CategoryServiceI categoryService;
 	private SalerServiceI salerService;
 	private ProductServiceI productService;
+	private PictureServiceI pictureService;
 	private List<Category> categoryList;
 	private List<Saler> salerList;
 	private List<File> files;
 	private Integer categoryId;
 	private Integer salerId;
+	private Long picId;
 	private String salerName;
 	private Pagination<Product> pagination;
 	
@@ -59,6 +62,10 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 	@Autowired
 	public void setSalerService(SalerServiceI salerService) {
 		this.salerService = salerService;
+	}
+	@Autowired
+	public void setPictureService(PictureServiceI pictureService) {
+		this.pictureService = pictureService;
 	}
 
 	public List<Category> getCategoryList() {
@@ -95,6 +102,14 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 
 	public void setSalerId(Integer salerId) {
 		this.salerId = salerId;
+	}
+
+	public Long getPicId() {
+		return picId;
+	}
+
+	public void setPicId(Long picId) {
+		this.picId = picId;
 	}
 
 	public String getSalerName() {
@@ -156,9 +171,11 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 				String fullPath = path + "/" + salerId.toString() + "/"
 						+ UUID.randomUUID().toString() + ".jpg";
 				FileUtils.copyFile(file, new File(fullPath));
+				int begin=path.indexOf("UploadImage");
+				String accessPath="http://localhost:8080/"+fullPath.substring(begin);
 				Picture picture = new Picture();
 				picture.setProduct(product);
-				picture.setPath(fullPath);
+				picture.setPath(accessPath);
 				pictures.add(picture);
 			}
 			product.setPictures(pictures);
@@ -179,5 +196,47 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		categoryList=categoryService.findByName(null, -1, -1).getList();
 		pagination=productService.find(categoryId, salerName, product.getName(), pageNo, pageSize);
 		return INDEX;
+	}
+	
+	public String deletePic() throws IOException{
+		pictureService.delete(picId);
+		return edit();
+	}
+	
+	public String update() throws IOException{
+		if(product.getName().length()==0||product.getName()==null){
+			addFieldError("", "产品名不能为空");
+			return edit();
+		}
+		if(product.getPrice()==null){
+			addFieldError("", "价格不能为空");
+			return edit();
+		}
+		if(product.getStockNumber()==null){
+			addFieldError("", "库存不能为空");
+			return edit();
+		}
+		Properties properties=new Properties();
+		properties.load(getClass().getResourceAsStream("/config.properties"));
+		String path=properties.get("uploadDirectory").toString();
+		Set<Picture> pictures=new HashSet<Picture>(0);
+		if (files.size() > 0) {
+			for (File file : files) {
+				String fullPath = path + "/" + salerId.toString() + "/"
+						+ UUID.randomUUID().toString() + ".jpg";
+				FileUtils.copyFile(file, new File(fullPath));
+				int begin=path.indexOf("UploadImage");
+				String accessPath="http://localhost:8080/"+fullPath.substring(begin);
+				Picture picture = new Picture();
+				picture.setProduct(product);
+				picture.setPath(accessPath);
+				pictures.add(picture);
+			}
+			product.setPictures(pictures);
+		}
+		product.setCategory(categoryService.findByID(categoryId));
+		product.setSaler(salerService.findByID(salerId));
+		productService.update(product);
+		return SUCCESS;
 	}
 }
