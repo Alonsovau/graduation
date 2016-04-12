@@ -48,11 +48,7 @@
 }
 </style>
 <script type="text/javascript">
-function submit(operate){
-	if(operate=='select')
-		addForm.action="productAction!select.action";
-	if(operate=='add')
-		addForm.action="productAction!edit.action";
+function submit(){
 	addForm.submit();
 	return true;
 }
@@ -61,69 +57,59 @@ function submit(operate){
 <body>
 <nav class="nav nav-sub pr">
   <div class="nav-title wb">
-  	<s:a action="adminAction!index.action" namespace="/admin">
+    <s:a action="adminAction!index.action" namespace="/admin">
     	<span  class="home">首页</span>
   	</s:a>
-	<span>管理员你好</span>
+	<span>
+		<s:iterator value="session">
+			<s:iterator value="value">
+				<s:property value="realname"/>
+			</s:iterator>
+		</s:iterator>
+	</span>
   </div>
 </nav>
 
-<div class="login layout f14"  style="margin: auto;width: 62%">
-    <s:form action="categoryAction!add.action" method="post" id="addForm" theme="simple">
+<div class="login layout f14"  style="margin: auto;width: 65%">
+	<div style="float: left;">
+    <s:form action="salerAction!list.action" method="post" id="addForm" theme="simple">
       <ul class="input-list mt10">
-      	<li>
-      	  <s:fielderror></s:fielderror>
-      	</li>
         <li>
-          <s:textfield name="salerName" cssClass="input-ui-b" placeholder="请输入商户名称" ></s:textfield>
+          <s:textfield name="name" cssClass="input-ui-b" placeholder="请输入商户名称" ></s:textfield>
+          <s:fielderror></s:fielderror>
         </li>
-        <li>
-          <s:textfield name="name" cssClass="input-ui-b" placeholder="请输入商品名称" ></s:textfield>
-        </li>
-        <li>
-          <span>选择类别：</span>
-          <select name="categoryId">
-          	<s:iterator var="category" value="categoryList">
-          		<s:iterator value="category">
-          			<option value="<s:property value="cateId"/>"><s:property value="name"/></option>
-          		</s:iterator>
-          	</s:iterator>
-          </select>
-        </li>        
       </ul>
     </s:form>
-    <div class="btn-ui-b mt10">
-        <a href="javascript:void(0);" onclick="return submit('add');">添加产品</a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<a href="javascript:void(0);" onclick="return submit('select');">查找</a>
+    </div>
+	<div style="float: left;height: 33px;margin-top: 12px;margin-left: 5px;">
+		<a href="javascript:void(0);" onclick="return submit();"><img src="../images/seacher.png"></img></a>
 	</div>
 	<s:if test="pagination!=null&&pagination.list.size()>0">
-		<div style="text-align:center;">
+		<div >
 			<table class="table">
-					<tr>
-						<th class="td">产品ID</th>
-						<th class="td">产品名称</th>
-						<th class="td"></th>
-						<th class="td"></th>
-					</tr>
 				<s:iterator value="pagination.list">
 					<tr>
-						<td class="td"><s:property value="productId"/></td>
-						<td class="td"><s:property value="name"/></td>
-						<td class="td">
-							<s:a action="productAction!delete.action">
-								<s:param name="productId" value="productId"></s:param>
-								<div class="mybtn">删除</div>	
-							</s:a>
-						</td>
-						<td class="td">
-							<s:a action="productAction!edit.action">
-								<s:param name="productId" value="productId"></s:param>
-								<div class="mybtn">修改</div>	
-							</s:a>
-						</td>						
+						<td class="td" style="font-size: 19px;font-weight:600;">&nbsp;&nbsp;<s:property value="name"/></td>
 					</tr>
+					<s:iterator value="products"  status="sts">
+						<s:if test="#sts.index<2">
+						<tr>
+						<td style="font-size: 16px;">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s:property value="name" /><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：<s:property value="price"/>
+							已售：<s:property value="sales"/>
+						</td>
+						<td>
+							<s:iterator status="st" value="pictures">
+								<s:if test="#st.first">
+									<img alt="" src="<s:property value="path"/>" height="80px" width="80px">
+									
+								</s:if>
+							</s:iterator>
+						</td>
+						</tr>
+						</s:if>
+					</s:iterator>
 				</s:iterator>
 			</table>
 		</div>
@@ -131,30 +117,22 @@ function submit(operate){
 		    <div class="load-more-lay" style="display: block;" id="loadingMore">
 		    <s:url var="first">
 		      <s:param name="pageNo" value="1"></s:param>
-		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
-		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>
 		    <s:url var="previous">
 		      <s:param name="pageNo" value="pagination.pageNo-1"></s:param>
-		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
-		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>
 		    <s:url var="last">
 		      <s:param name="pageNo" value="pagination.bottomPageNo"></s:param>
-		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
-		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>
 		    <s:url var="next">
 		      <s:param name="pageNo" value="pagination.pageNo+1"></s:param>
-		      <s:param name="categoryId" value="categoryId"></s:param>
 		      <s:param name="name" value="name"></s:param>
-		      <s:param name="salerName" value="salerName"></s:param>
 		    </s:url>	
 		    </div>
-		    <div class="w page">
+		    <div>
 		      <s:include value="/common/page08.jsp"></s:include>
 		    </div>
 		</div>			

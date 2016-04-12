@@ -19,7 +19,7 @@
         <property name="account" type="java.lang.String">
             <column name="account" length="30" />
         </property>
-        <set name="products" inverse="true">
+        <set name="products" inverse="true" lazy="false">
             <key>
                 <column name="saler_id" />
             </key>

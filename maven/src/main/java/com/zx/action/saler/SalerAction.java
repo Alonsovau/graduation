@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.zx.action.BaseAction;
+import com.zx.model.Customer;
 import com.zx.model.Pagination;
 import com.zx.model.Saler;
 import com.zx.service.SalerServiceI;
@@ -17,7 +18,8 @@ import com.zx.service.SalerServiceI;
 @Results({
 	@Result(name="index",location="/saler/saler_operate.jsp"),
 	@Result(name="edit",location="/saler/saler_add.jsp"),
-	@Result(name="success",location="/common/admin_success.jsp")
+	@Result(name="success",location="/common/admin_success.jsp"),
+	@Result(name="list",location="/customer/saler_list.jsp")
 })
 public class SalerAction extends BaseAction implements ModelDriven<Saler>{
 	/**
@@ -86,6 +88,17 @@ public class SalerAction extends BaseAction implements ModelDriven<Saler>{
 	public String select(){
 		pagination=salerService.findByName(saler.getName(), pageNo, pageSize);
 		return INDEX;
+	}
+	
+	public String list(){
+		Customer customer=(Customer) session.get("customer");
+		pagination=salerService.findByName(saler.getName(), pageNo, pageSize);
+		return LIST;
+	}
+	
+	public String cus_select(){
+		
+		return LIST;
 	}
 	
 	public String update(){

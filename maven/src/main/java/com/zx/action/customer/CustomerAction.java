@@ -23,7 +23,7 @@ import com.zx.util.Encrypt;
 @Namespace("/customer")
 @Action("customerAction")
 @Results({
-	@Result(name="index",location="/index.jsp"),
+	@Result(name="index",location="/customer/return_index.jsp"),
 	@Result(name="customerLogin",location="/customer/customer_login.jsp"),
 	@Result(name="register",location="/customer/customer_register.jsp"),
 	@Result(name="input",location="/customer/customer_register.jsp"),

@@ -1,8 +1,12 @@
 package com.zx.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.zx.dao.BaseDao;
 import com.zx.model.Category;
 import com.zx.model.Pagination;
+import com.zx.model.Picture;
 import com.zx.model.Product;
 import com.zx.service.ProductServiceI;
 
@@ -75,7 +80,20 @@ public class ProductServiceImpl implements ProductServiceI{
 	}
 
 	@Override
-	public boolean delete(Product product) {
+	public boolean delete(Product product) throws IOException {
+		Properties properties=new Properties();
+		properties.load(getClass().getResourceAsStream("/config.properties"));
+		String path=properties.get("uploadDirectory").toString();
+		int begin=path.indexOf("UploadImage");
+		product=findByID(product.getProductId());
+		Iterator<Picture> it=product.getPictures().iterator();
+		while(it.hasNext()){
+			Picture picture=(Picture) it.next();
+			String realPath=path+picture.getPath().substring(begin+1);
+			File file=new File(realPath);
+			if(file.exists())
+				file.delete();
+		}
 		productDao.delete(Product.class, product.getProductId());
 		return true;
 	}

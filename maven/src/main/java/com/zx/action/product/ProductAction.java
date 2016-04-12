@@ -149,6 +149,9 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		return EDIT;
 	}
 	
+	/*
+	 *4.12   localhost改为192.168.1.7
+	 * **/
 	public String add() throws Exception{
 		if(product.getName().length()==0||product.getName()==null){
 			addFieldError("", "产品名不能为空");
@@ -172,7 +175,7 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 						+ UUID.randomUUID().toString() + ".jpg";
 				FileUtils.copyFile(file, new File(fullPath));
 				int begin=path.indexOf("UploadImage");
-				String accessPath="http://localhost:8080/"+fullPath.substring(begin);
+				String accessPath="http://192.168.1.7:8080/"+fullPath.substring(begin);
 				Picture picture = new Picture();
 				picture.setProduct(product);
 				picture.setPath(accessPath);
@@ -220,13 +223,13 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		properties.load(getClass().getResourceAsStream("/config.properties"));
 		String path=properties.get("uploadDirectory").toString();
 		Set<Picture> pictures=new HashSet<Picture>(0);
-		if (files.size() > 0) {
+		if (files!=null&&files.size() > 0) {
 			for (File file : files) {
 				String fullPath = path + "/" + salerId.toString() + "/"
 						+ UUID.randomUUID().toString() + ".jpg";
 				FileUtils.copyFile(file, new File(fullPath));
 				int begin=path.indexOf("UploadImage");
-				String accessPath="http://localhost:8080/"+fullPath.substring(begin);
+				String accessPath="http://192.168.1.7:8080/"+fullPath.substring(begin);
 				Picture picture = new Picture();
 				picture.setProduct(product);
 				picture.setPath(accessPath);
@@ -238,5 +241,11 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		product.setSaler(salerService.findByID(salerId));
 		productService.update(product);
 		return SUCCESS;
+	}
+	
+	public String delete() throws IOException{
+		if(productService.delete(product))
+			return SUCCESS;
+		return null;
 	}
 }

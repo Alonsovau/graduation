@@ -23,7 +23,7 @@
 	border-bottom: 1px solid #E9E5D7;
 	margin: 10px 10px 0;
 }
-.nav .goback {
+.nav .home {
 	position: absolute;
 	left: 15px;
 	width: 30px;
@@ -31,7 +31,7 @@
 	background-size: 25px 20px;
 	text-indent: -100px;
 	overflow: hidden;
-	background-image: url(../images/arrow_header.png);
+	background-image: url(../images/icon-home.png);
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -61,6 +61,9 @@ function submit(operate){
 <body>
 <nav class="nav nav-sub pr">
   <div class="nav-title wb">
+    <s:a action="adminAction!index.action" namespace="/admin">
+    	<span  class="home">首页</span>
+  	</s:a>
 	<span>管理员你好</span>
   </div>
 </nav>
@@ -128,7 +131,7 @@ function submit(operate){
 		      <s:param name="name" value="name"></s:param>
 		    </s:url>	
 		    </div>
-		    <div class="w page">
+		    <div>
 		      <s:include value="/common/page08.jsp"></s:include>
 		    </div>
 		</div>			
