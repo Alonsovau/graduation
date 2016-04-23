@@ -12,17 +12,19 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="telephone=no" name="format-detection">
-<title>管理员</title>
+<title></title>
 <link rel="stylesheet" type="text/css" href="${context_path}/css/module.css">
 <link rel="stylesheet" type="text/css" href="${context_path}/css/member.css">
 <style type="text/css">
 .nav {
 	height: 46px;
-	background: -webkit-gradient(linear,0% 0,0% 100%,from(#F9F3E6),to(#F1E8D6));
+	background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#F9F3E6),
+		to(#F1E8D6) );
 	border-top: 1px solid #FBF8F0;
 	border-bottom: 1px solid #E9E5D7;
 	margin: 10px 10px 0;
 }
+
 .nav .home {
 	position: absolute;
 	left: 15px;
@@ -46,98 +48,114 @@
 	height: 46px;
 	overflow: hidden;
 }
+
+.calendar {
+	width: 200px;
+	height: 20px;
+	line-height: 20px;
+	border: 1px #A5D2EC solid;
+	padding: 5px;
+	background-color: #fff;
+	background-image: url("../images/calendar.png");
+	background-repeat: no-repeat;
+	background-position: right center;
+	margin-left: 10px;
+	display: block;
+}
+
+.name {
+	width: 200px;
+	height: 20px;
+	line-height: 20px;
+	border: 1px #A5D2EC solid;
+	padding: 5px;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: right center;
+	margin-left: 10px;
+	display: block;
+}
 </style>
 <script type="text/javascript">
-function submit(operate){
-	if(operate=='select')
-		addForm.action="categoryAction!select.action";
-	if(operate=='add')
-		addForm.action="categoryAction!add.action";
-	addForm.submit();
+function submit(){
+	Form.submit();
 	return true;
 }
 </script>
+<script type="text/javascript" src="../jedate/jedate.js"></script>
 </head>
 <body>
 <nav class="nav nav-sub pr">
-  <div class="nav-title wb">
-    <s:a action="adminAction!index.action" namespace="/admin">
-    	<span  class="home">首页</span>
-  	</s:a>
-	<span>管理员你好</span>
-  </div>
+	<div class="nav-title wb">
+		<s:a action="salerAction!list.action" namespace="/saler">
+			<span class="home">首页</span>
+		</s:a>
+		<span> <s:iterator value="session">
+				<s:iterator value="value">
+					<s:property value="realname" />
+				</s:iterator>
+			</s:iterator> 
+		</span>
+	</div>
 </nav>
 
 <div class="login layout f14"  style="margin: auto;width: 62%">
-    <s:form action="categoryAction!add.action" method="post" id="addForm" theme="simple">
-      <ul class="input-list mt10">
-        <li>
-          <s:textfield name="name" cssClass="input-ui-b" placeholder="请输入类别名称" ></s:textfield>
-          <s:fielderror></s:fielderror>
-      </ul>
-    </s:form>
-    <div class="btn-ui-b mt10">
-        <a href="javascript:void(0);" onclick="return submit('add');">添加类别</a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<a href="javascript:void(0);" onclick="return submit('select');">查找</a>
-	</div>
 	<s:if test="pagination!=null&&pagination.list.size()>0">
 		<div style="text-align:center;">
 			<table class="table">
 					<tr>
-						<th class="td">ID</th>
-						<th class="td">类别名称</th>
-						<th class="td"></th>
-						<th class="td"></th>
+						<th class="td">订单号</th>
+						<th class="td">订单时间</th>
 					</tr>
 				<s:iterator value="pagination.list">
 					<tr>
-						<td class="td"><s:property value="cateId"/></td>
-						<td class="td"><s:property value="name"/></td>
+						<td class="td"><s:property value="orderId"/></td>
+						<td class="td"><s:property value="time"/></td>
 						<td class="td">
-							<s:a action="categoryAction!delete.action">
-								<s:param name="cateId" value="cateId"></s:param>
-								<div class="mybtn">删除</div>	
-							</s:a>
-						</td>
-						<td class="td">
-							<s:a action="categoryAction!edit.action">
-								<s:param name="cateId" value="cateId"></s:param>
-								<div class="mybtn">修改</div>	
+							<s:a action="ordersAction!cusDetail.action">
+								<s:param name="orderId" value="orderId"></s:param>
+								<div class="mybtn">查看详情</div>	
 							</s:a>
 						</td>						
 					</tr>
 				</s:iterator>
 			</table>
+			
 		</div>
-		<div id="more_load w" style="text-align: center;">
+		<div id="more_load w" style="margin-left: 10px;">
 		    <div class="load-more-lay" style="display: block;" id="loadingMore">
 		    <s:url var="first">
 		      <s:param name="pageNo" value="1"></s:param>
-		      <s:param name="name" value="name"></s:param>
+		      <s:param name="username" value="%{username}"></s:param>
+		      <s:param name="start" value="%{start}"></s:param>
+		      <s:param name="end" value="%{end}"></s:param>
 		    </s:url>
 		    <s:url var="previous">
 		      <s:param name="pageNo" value="pagination.pageNo-1"></s:param>
-		      <s:param name="name" value="name"></s:param>
+		      <s:param name="username" value="%{username}"></s:param>
+		      <s:param name="start" value="%{start}"></s:param>
+		      <s:param name="end" value="%{end}"></s:param>
 		    </s:url>
 		    <s:url var="last">
 		      <s:param name="pageNo" value="pagination.bottomPageNo"></s:param>
-		      <s:param name="name" value="name"></s:param>
+		      <s:param name="username" value="%{username}"></s:param>
+		      <s:param name="start" value="%{start}"></s:param>
+		      <s:param name="end" value="%{end}"></s:param>
 		    </s:url>
 		    <s:url var="next">
 		      <s:param name="pageNo" value="pagination.pageNo+1"></s:param>
-		      <s:param name="name" value="name"></s:param>
+		      <s:param name="username" value="%{username}"></s:param>
+		      <s:param name="start" value="%{start}"></s:param>
+		      <s:param name="end" value="%{end}"></s:param>
 		    </s:url>	
 		    </div>
-		    <div>
+		    <div class="w page">
 		      <s:include value="/common/page08.jsp"></s:include>
 		    </div>
 		</div>			
 	</s:if>
 
 </div>
-
 <div id="footer">
   <div class="copyright">Copyright© 2012-2016 m.zx.com</div>
 </div>

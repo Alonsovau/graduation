@@ -127,7 +127,7 @@ function submit(operate){
 				</s:iterator>
 			</table>
 		</div>
-		<div id="more_load w" style="text-align: center;">
+		<div id="more_load w" style="margin-left: 20px;">
 		    <div class="load-more-lay" style="display: block;" id="loadingMore">
 		    <s:url var="first">
 		      <s:param name="pageNo" value="1"></s:param>
@@ -163,7 +163,7 @@ function submit(operate){
 </div>
 
 <div id="footer">
-  <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
+  <div class="copyright">Copyright© 2012-2016 m.zx.com</div>
 </div>
 </body>
 </html>

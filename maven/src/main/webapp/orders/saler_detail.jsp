@@ -13,8 +13,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="telephone=no" name="format-detection">
 <title>管理员</title>
-<link rel="stylesheet" type="text/css" href="${context_path}/css/module.css">
-<link rel="stylesheet" type="text/css" href="${context_path}/css/member.css">
+<link rel="stylesheet" type="text/css" href="${context_path}/css/module.css"/>
+<link rel="stylesheet" type="text/css" href="${context_path}/css/member.css"/>
+<link rel="stylesheet" href="${context_path}/css/jquery.spinner.css" type="text/css"/>
 <style type="text/css">
 .nav {
 	height: 46px;
@@ -23,7 +24,7 @@
 	border-bottom: 1px solid #E9E5D7;
 	margin: 10px 10px 0;
 }
-.nav .goback {
+.nav .home {
 	position: absolute;
 	left: 15px;
 	width: 30px;
@@ -31,7 +32,7 @@
 	background-size: 25px 20px;
 	text-indent: -100px;
 	overflow: hidden;
-	background-image: url(../images/arrow_header.png);
+	background-image: url(../images/icon-home.png);
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -47,28 +48,37 @@
 	overflow: hidden;
 }
 </style>
+<script type="text/javascript" src="../jquery.spinner.js"></script>
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.7.2/jquery.min.js"></script>
 </head>
 <body>
 <nav class="nav nav-sub pr">
   <div class="nav-title wb">
-	<span>管理员你好</span>
+    <s:a action="adminAction!index.action" namespace="/admin">
+    	<span  class="home">首页</span>
+  	</s:a>
+	<span>
+		<s:iterator value="session">
+			<s:iterator value="value">
+				<s:property value="realname"/>
+				<s:property value="cusId"/>
+			</s:iterator>
+		</s:iterator>
+	</span>
   </div>
 </nav>
 
-<div class="login layout f14"  style="width: 62%;text-align: center;margin: auto;">
-	<div class="btn-ui-b mt10">
-		<s:a action="categoryAction!index" namespace="/category">类别管理</s:a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<s:a action="salerAction!index" namespace="/saler">商家管理</s:a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<s:a action="productAction!index" namespace="/product">商品管理</s:a>
-	</div>
-	<div class="btn-ui-b mt10">
-		<s:a action="ordersAction!index" namespace="/orders">订单管理</s:a>
-	</div>	
+<div class="login layout f14"  style="margin: auto;width: 65%">
+	<s:iterator value="product">
+		<s:property value="name"/>
+	</s:iterator>
+	
+	<br/><hr style="height:1px;border:none;border-top:1px dashed #9B9090;" />
 </div>
+<input type="text" class="spinner"/> 
+<script type="text/javascript">
+$('.spinner').spinner();
+</script>
 
 <div id="footer">
   <div class="copyright">Copyright© 2012-2016 m.zx.com</div>

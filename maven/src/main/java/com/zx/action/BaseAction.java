@@ -29,6 +29,7 @@ public class BaseAction extends ActionSupport implements RequestAware,SessionAwa
 	public static final String ERROR = "error";
 	public static final String WELCOME="welcome";
 	public static final String INITADD="initadd";
+	public static final String DETAIL="detail";
 	
 	// 获取普通用户对象
 /*	public Customer getLoginCustomer(){

@@ -19,7 +19,9 @@ import com.zx.service.SalerServiceI;
 	@Result(name="index",location="/saler/saler_operate.jsp"),
 	@Result(name="edit",location="/saler/saler_add.jsp"),
 	@Result(name="success",location="/common/admin_success.jsp"),
-	@Result(name="list",location="/customer/saler_list.jsp")
+	@Result(name="list",location="/customer/saler_list.jsp"),
+	@Result(name="detail",location="/saler/saler_detail.jsp"),
+	@Result(name="recommand",location="/recommand.jsp")
 })
 public class SalerAction extends BaseAction implements ModelDriven<Saler>{
 	/**
@@ -90,14 +92,14 @@ public class SalerAction extends BaseAction implements ModelDriven<Saler>{
 		return INDEX;
 	}
 	
+	public String selectbyId(){
+		saler=salerService.findByID(saler.getSalerId());
+		return DETAIL;
+	}
+	
 	public String list(){
 		Customer customer=(Customer) session.get("customer");
 		pagination=salerService.findByName(saler.getName(), pageNo, pageSize);
-		return LIST;
-	}
-	
-	public String cus_select(){
-		
 		return LIST;
 	}
 	
@@ -116,5 +118,10 @@ public class SalerAction extends BaseAction implements ModelDriven<Saler>{
 			return SUCCESS;
 		addFieldError("", "删除失败");
 		return INDEX;
+	}
+	
+	public String recommand(){
+		
+		return "recommand";
 	}
 }

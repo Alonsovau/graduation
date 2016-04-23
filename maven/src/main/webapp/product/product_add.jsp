@@ -174,9 +174,9 @@ function createFileButton(){
     </div>
     </s:if>   
 </div>
-ss<s:property value="product.pictures.PId"/>
+<s:property value="product.pictures.PId"/>
 <div id="footer">
-  <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
+  <div class="copyright">Copyright© 2012-2016 m.zx.com</div>
 </div>
 </body>
 </html>

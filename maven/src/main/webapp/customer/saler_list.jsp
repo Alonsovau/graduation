@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="telephone=no" name="format-detection">
-<title>管理员</title>
+<title>首页</title>
 <link rel="stylesheet" type="text/css" href="${context_path}/css/module.css">
 <link rel="stylesheet" type="text/css" href="${context_path}/css/member.css">
 <style type="text/css">
@@ -57,8 +57,8 @@ function submit(){
 <body>
 <nav class="nav nav-sub pr">
   <div class="nav-title wb">
-    <s:a action="adminAction!index.action" namespace="/admin">
-    	<span  class="home">首页</span>
+  	<s:a action="salerAction!recommand.action" namespace="/saler">
+    	<span style="position: absolute;left: 15px;color:#7412C4;">推荐</span>
   	</s:a>
 	<span>
 		<s:iterator value="session">
@@ -68,6 +68,11 @@ function submit(){
 		</s:iterator>
 	</span>
   </div>
+  <div class="title-submit-ui-a">
+    <s:a action="ordersAction!cusIndex.action" namespace="/orders">
+		订单
+    </s:a>
+   </div>
 </nav>
 
 <div class="login layout f14"  style="margin: auto;width: 65%">
@@ -89,7 +94,12 @@ function submit(){
 			<table class="table">
 				<s:iterator value="pagination.list">
 					<tr>
-						<td class="td" style="font-size: 19px;font-weight:600;">&nbsp;&nbsp;<s:property value="name"/></td>
+						<td class="td" style="font-size: 19px;font-weight:600;">
+							<s:a action="salerAction!selectbyId.action">
+								<s:param name="salerId" value="salerId"></s:param>
+								&nbsp;&nbsp;<s:property value="name"/>
+							</s:a>
+						</td>
 					</tr>
 					<s:iterator value="products"  status="sts">
 						<s:if test="#sts.index<2">
@@ -141,7 +151,7 @@ function submit(){
 </div>
 
 <div id="footer">
-  <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
+  <div class="copyright">Copyright© 2012-2016 m.zx.com</div>
 </div>
 </body>
 </html>

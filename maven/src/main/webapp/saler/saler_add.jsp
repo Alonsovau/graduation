@@ -96,7 +96,7 @@ function submit(operate){
 </div>
 
 <div id="footer">
-  <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
+  <div class="copyright">Copyright© 2012-2016 m.zx.com</div>
 </div>
 </body>
 </html>

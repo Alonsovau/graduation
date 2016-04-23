@@ -32,7 +32,8 @@ import com.zx.service.SalerServiceI;
 	@Result(name="edit",location="/product/product_add.jsp"),
 	@Result(name="index",location="/product/product_operate.jsp"),
 	@Result(name="input",location="/index.jsp"),
-	@Result(name="success",location="/common/admin_success.jsp")
+	@Result(name="success",location="/common/admin_success.jsp"),
+	@Result(name="orderInit",location="/orders/order_init.jsp")
 })
 public class ProductAction extends BaseAction implements ModelDriven<Product>{
 
@@ -185,6 +186,7 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		}
 		product.setCategory(categoryService.findByID(categoryId));
 		product.setSaler(salerService.findByID(salerId));
+		product.setSales(0);
 		if(productService.save(product))
 			return SUCCESS;
 		return edit();
@@ -247,5 +249,10 @@ public class ProductAction extends BaseAction implements ModelDriven<Product>{
 		if(productService.delete(product))
 			return SUCCESS;
 		return null;
+	}
+	
+	public String orderInit(){
+		product=productService.findByID(product.getProductId());
+		return "orderInit";
 	}
 }

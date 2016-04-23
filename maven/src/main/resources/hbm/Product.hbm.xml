@@ -31,7 +31,7 @@
         <property name="sales" type="java.lang.Integer">
             <column name="Sales" />
         </property>
-        <set name="orderses" table="order_product" catalog="maven">
+        <set name="orderses" table="order_product" catalog="maven" inverse="true">
             <key>
                 <column name="product_id" not-null="true" />
             </key>

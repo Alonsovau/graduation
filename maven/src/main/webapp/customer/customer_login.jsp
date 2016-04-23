@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="telephone=no" name="format-detection">
-<title>登录_易购网触屏版</title>
+<title>登录</title>
 <link rel="stylesheet" type="text/css" href="${context_path}/css/module.css">
 <link rel="stylesheet" type="text/css" href="${context_path}/css/member.css">
 <style type="text/css">
@@ -71,9 +71,6 @@ function checkForm(){
 </head>
 <body>
 <nav class="nav nav-sub pr">
-  <s:a action="index" namespace="/">
-    <span  class="goback">返回首页</span>
-  </s:a>
   <div class="nav-title wb">
 	<span>用户登录</span>
   </div>
@@ -104,22 +101,7 @@ function checkForm(){
 </div>
 
 <div id="footer">
-  <ul class="list-ui-a">
-    <li>
-      <div class="w user-login">
-        <s:a action="customerAction!register.action" namespace="/customer"  name="wap_home_bottom02002" id="footerRegister">
-           注册
-        </s:a> 
-        <s:a action="cart_list" namespace="/product"  name="wap_home_bottom03002">
-            购物车
-        </s:a> 
-        <s:a action="order_findByCustomer" namespace="/product" name="wap_home_bottom03003">            
-           我的订单
-        </s:a>
-      </div>
-    </li>
-  </ul>
-  <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
+  <div class="copyright">Copyright© 2012-2016 m.zx.com</div>
 </div>
 </body>
 </html>

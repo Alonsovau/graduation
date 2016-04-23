@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=2.0"/>
 <%--适应屏幕大小--%>
-<title>注册_易购网触屏版</title>
+<title>注册</title>
 <link rel="stylesheet" type="text/css" href="${context_path}/css/module.css">
 <link rel="stylesheet" type="text/css" href="${context_path}/css/member.css">
 <style type="text/css">
@@ -57,9 +57,6 @@ function registerSubmit(){
 <body>
 <s:property value="exception.message"/>
 <nav class="nav nav-sub pr">
-  <s:a action="customerAction!index.action" namespace="/customer">
-    <span  class="goback">返回首页</span>
-  </s:a>
   <div class="nav-title wb">
 	<span>用户注册</span>
   </div>
@@ -107,38 +104,15 @@ function registerSubmit(){
         </li>
       </ul>
     </s:form>
-    <div class="btn-ui-b mt10">
+    <div class="btn-ui-b mt10" style="margin-bottom: 20px;">
            <a  href="javascript:void(0);" onclick="return registerSubmit();">注册</a>
-    </div>
-    <div class="wbox a label-bind zhmm mt10">
-        <label><input type="checkbox" class="input-checkbox-a f-les m-tops" id="epp_email_checked"></label>
-        <div class="wbox-flex">
-          <p>同意易购网触屏版会员章程</p>
-          <p>同意易付宝协议，创建易付宝账户</p>
-          <p class="err-tips mt5 hide" id="epp_email_checked_error">请确认此协议！</p>
-        </div>
     </div>
     </div>
   </div>
 </div>
 </div>    
 <div id="footer">
-  <ul class="list-ui-a">
-    <li>
-      <div class="w user-login">
-        <s:a action="customer_login" namespace="/customer">
-                      登录
-        </s:a> 
-        <s:a action="cart_list" namespace="/product"  name="wap_home_bottom03002">
-                      购物车
-        </s:a> 
-        <s:a action="order_findByCustomer" namespace="/product" name="wap_home_bottom03003">            
-                     我的订单
-        </s:a>　            
-      </div>
-    </li>
-  </ul>
-  <div class="copyright">Copyright© 2012-2018 m.ebuy.com</div>
+  <div class="copyright">Copyright© 2012-2016 m.zx.com</div>
 </div>
 </body>
 </html>
