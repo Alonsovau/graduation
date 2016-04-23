@@ -27,7 +27,9 @@ import com.zx.util.Encrypt;
 	@Result(name="customerLogin",location="/customer/customer_login.jsp"),
 	@Result(name="register",location="/customer/customer_register.jsp"),
 	@Result(name="input",location="/customer/customer_register.jsp"),
-	@Result(name="error",location="/common/error.jsp")
+	@Result(name="error",location="/common/error.jsp"),
+	@Result(name="edit",location="/customer/customer_update.jsp"),
+	@Result(name="success",location="/customer/return_index.jsp")
 })
 @ExceptionMappings({
 	@ExceptionMapping(exception="com.zx.util.AppException",result="error")
@@ -126,5 +128,23 @@ public class CustomerAction extends BaseAction implements ModelDriven<Customer> 
 			session.clear();
 		}
 		return INDEX;
+	}
+	
+	@SkipValidation
+	public String edit(){
+		return EDIT;
+	}
+	
+	@SkipValidation
+	public String update(){
+		Customer cus=(Customer) session.get("customer");
+		if(cus.getPassword().equals(Encrypt.md5(customer.getPassword()))){
+			cus.setPassword(Encrypt.md5(repassword));
+			customerService.update(cus);
+			return SUCCESS;
+		}else{
+			addFieldError("", "原密码错误");
+			return EDIT;
+		}
 	}
 }

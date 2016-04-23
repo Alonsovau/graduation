@@ -75,6 +75,14 @@
 	margin-left: 10px;
 	display: block;
 }
+.xiugai{
+	position: absolute;
+    right: 5px;
+    top: 7px;
+    height: 28px;
+    line-height: 28px;
+    width: 80px;
+}
 </style>
 <script type="text/javascript">
 function submit(){
@@ -91,15 +99,20 @@ function submit(){
 			<span class="home">首页</span>
 		</s:a>
 		<span> <s:iterator value="session">
-				<s:iterator value="value">
-					<s:property value="realname" />
+			<s:iterator value="value">
+				<s:property value="realname" />
 				</s:iterator>
 			</s:iterator> 
 		</span>
 	</div>
+	<div class="xiugai">
+		<s:a action="customerAction!edit.action" namespace="/customer">
+		修改密码
+		</s:a>
+	</div>
 </nav>
 
-<div class="login layout f14"  style="margin: auto;width: 62%">
+	<div class="login layout f14"  style="margin: auto;width: 62%">
 	<s:if test="pagination!=null&&pagination.list.size()>0">
 		<div style="text-align:center;">
 			<table class="table">

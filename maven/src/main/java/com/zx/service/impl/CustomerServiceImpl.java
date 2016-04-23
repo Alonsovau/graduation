@@ -60,5 +60,9 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	public void save(Customer customer) {
 		customerDao.save(customer);
 	}
+	@Override
+	public void update(Customer customer) {
+		customerDao.update(customer);
+	}
 
 }
